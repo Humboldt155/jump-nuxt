@@ -2,9 +2,8 @@
   <nav class="navbar is-transparent" >
     <div class="navbar-brand" >
       <a class="navbar-item" >
-        Jump
+        <img src="../static/jump_logo.png" alt="Jump" width="73" height="28">
       </a>
-      <a class="button is-primary is-small is-rounded">BETA</a>
     </div>
     <div class="navbar-end">
       <b-dropdown position="is-bottom-left">
