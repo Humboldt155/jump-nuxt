@@ -17,6 +17,7 @@ module.exports = {
   ** Customize the progress bar color
   */
   plugins: ['~plugins/buefy.js'],
+  css: ['~assets/app.styl'],
   loading: { color: '#3B8070' },
   /*
   ** Build configuration
