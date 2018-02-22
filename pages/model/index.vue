@@ -35,16 +35,16 @@
     <section>
       <b-tabs class="block"  type="is-boxed" expanded>
             <b-tab-item label="Мастер-данные" icon="account">
-              <jump-model-table></jump-model-table>
+              <!--<jump-model-table></jump-model-table>-->
             </b-tab-item>
             <b-tab-item label="Комплементы" icon="fas user">
-              <jump-complements></jump-complements>
+              <!--<jump-complements></jump-complements>-->
             </b-tab-item>
             <b-tab-item label="Аналоги" icon="fas user">
-              <jump-analogs></jump-analogs>
+              <!--<jump-analogs></jump-analogs>-->
             </b-tab-item>
             <b-tab-item label="Состав" icon="user">
-              <jump-consist></jump-consist>
+              <!--<jump-consist></jump-consist>-->
             </b-tab-item>
             <b-tab-item label="Атрибуты и Значения" icon="user"></b-tab-item>
         </b-tabs>
@@ -53,39 +53,42 @@
 </template>
 
 <script>
+
+
 import ModelTableComponent from '../../components/model/modelTable'
 import AnalogsComponent from '../../components/model/analogs'
 import ComplementsComponent from '../../components/model/complements'
 import ConsistComponent from '../../components/model/consist'
 
 export default {
+  middleware: 'model',
   data () {
     return {
       model_inserted: 'MOD_200767'
     }
   },
   methods: {
-    requestDB: function () {
-      this.$store.commit('setModels', this.model_inserted)
-      this.$store.commit('setLmCodes', this.model_inserted)
-    }
+    // requestDB: function () {
+    //   this.$store.commit('setModels', this.model_inserted)
+    //   this.$store.commit('setLmCodes', this.model_inserted)
+    // }
   },
   components: {
-    'jump-model-table': ModelTableComponent,
-    'jump-analogs': AnalogsComponent,
-    'jump-complements': ComplementsComponent,
-    'jump-consist': ConsistComponent
+    // 'jump-model-table': ModelTableComponent,
+    // 'jump-analogs': AnalogsComponent,
+    // 'jump-complements': ComplementsComponent,
+    // 'jump-consist': ConsistComponent
   },
   computed: {
-    updateTable () {
-      this.requestDB()
-    },
-    model_selected () {
-      return this.$store.state.model_selected
-    },
-    models () {
-      return this.$store.state.models
-    }
+    // updateTable () {
+    //   this.requestDB()
+    // },
+    // model_selected () {
+    //   return this.$store.state.model_selected
+    // },
+    // models () {
+    //   return this.$store.state.models
+    // }
   }
 }
 </script>

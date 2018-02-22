@@ -14,7 +14,7 @@
         <div class="tile is-vertical is-8">
           <div class="tile">
             <div class="tile is-parent is-vertical">
-              <router-link to="/model/id" tag="span" style="cursor: pointer">
+              <router-link to="/model" tag="span" style="cursor: pointer">
                 <article class="tile is-child notification is-primary">
                     <p class="title">Модель ADEO</p>
                     <div class="content">
