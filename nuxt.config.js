@@ -20,9 +20,6 @@ module.exports = {
     '~plugins/buefy.js',
     '~plugins/font-awesome.js'
   ],
-  css: [
-    { src: 'font-awesome/scss/font-awesome.scss', lang: 'scss' }
-  ],
   loading: { color: '#3B8070' },
   /*
   ** Build configuration
