@@ -1,8 +1,5 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-
-Vue.use(Vuex)
 
 const urlJump = 'http://humboldt155.pythonanywhere.com/api/'
 
@@ -19,59 +16,41 @@ const urlNumber = 1
 
 const Authorisation = 'Basic d2lrZW86b2VraXc'
 
-export const store = new Vuex.Store({
-  state: {
-    model_selected: 'MOD_200767',
-    models: [],
-    lm_codes: [],
-    models_adeo: [],
-    urlOpusChosen: urlsOpus[urlNumber - 1].url
-  },
-  getters: {
-  },
-  mutations: {
-    setModels (state, modelInserted) {
-      axios.get(urlJump.concat('models/'), {
-        params: {
-          id: modelInserted
-        }
-      })
-        .then(response => {
-          state.models = response.data
-        })
-        .catch(e => {
-          state.errors.push(e)
-        })
-      state.model_selected = modelInserted
+const createStore = () => {
+  return new Vuex.Store({
+    state: {
+      modelId: '',
+      model: [],
+      models: [],
+      urlOpusChosen: urlsOpus[urlNumber - 1].url
     },
-    setLmCodes (state, model) {
-      axios.get(urlJump.concat('lm_codes/'), {
-        params: {
-          model: model
-        }
-      })
-        .then(response => {
-          state.lm_codes = response.data
+    mutations: {
+      setModel(state, modelId) {
+        axios.get(urlJump.concat('models/'), {
+          params: {
+            id: modelId
+          }
         })
-        .catch(e => {
-          state.errors.push(e)
-        })
+          .then(response => {
+            state.model = response.data
+          })
+          .catch(e => {
+            state.errors.push(e)
+          })
+        state.modelId = modelId
+      }
     },
-    setModelsAdeo (state) {
-      axios.get(state.urlOpusChosen.concat('business/v2/products?pageSize=100&startFrom=1&mask=Characteristics'),
-        { headers: {
-          'Authorization': Authorisation,
-          'X-Opus-Publish-Status': 'published'
-        }
-        })
-        .then(response => {
-          state.models_adeo = response.data
-        })
-        .catch(e => {
-          state.errors.push(e)
-        })
+    actions: {
+      setModel(vuexContext, modelId) {
+        vuexContext.commit('setModel', modelId)
+      }
+    },
+    getters: {
+      model(state) {
+        return state.model
+      }
     }
-  },
-  actions: {
-  }
-})
+  })
+}
+
+export default createStore

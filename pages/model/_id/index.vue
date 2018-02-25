@@ -5,20 +5,21 @@
         <div class="column is-two-thirds">
           <h1 class="title is-3">{{ modelId }}</h1>
           <h2 class="subtitle is-5">{{ modelId }}</h2>
+          <p>{{model}}</p>
         </div>
         <div class="column">
           <div class="box">
             <div class="tags has-addons">
-              <span class="tag is-primary">FR:</span>
-              <p class="tag" v-for="(item) in models">{{ item.french_name }}</p>
+              <span class="tag is-primary">FR </span>
+              <!--<p class="tag">{{ model.french_name }}</p>-->
             </div>
             <div class="tags has-addons">
-              <span class="tag is-primary">EN:</span>
-              <p class="tag" v-for="(item) in models">{{ item.english_name }}</p>
+              <span class="tag is-primary">EN </span>
+              <!--<p class="tag">{{ model.english_name }}</p>-->
             </div>
             <div class="tags has-addons">
-              <span class="tag is-primary">RU</span>
-              <p class="tag" v-for="(item) in models">{{ item.russian_name }}</p>
+              <span class="tag is-primary">RU </span>
+              <!--<p class="tag">{{ model.russian_name }}</p>-->
             </div>
             </div>
           </div>
@@ -55,19 +56,29 @@
     data () {
       return {
         modelId: this.$route.params.id,
-        // models: this.$store.state.models
+        model: []
       }
     },
     validate (data) {
       console.log(data)
       return true
     },
+    created () {
+      this.$store.commit('setModel', this.modelId)
+      this.model = this.$store.state.model[0]
+    },
     components: {
       'jump-model-table': ModelTableComponent,
       'jump-analogs': AnalogsComponent,
       'jump-complements': ComplementsComponent,
       'jump-consist': ConsistComponent
-  },
+  }
+    // methods: {
+    //   model () {
+    //     // this.$store.dispatch('setModel', this.modelId)
+    //     return this.$store.model
+    //   }
+    // }
 
     }
 </script>

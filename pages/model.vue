@@ -103,7 +103,7 @@
     },
     methods: {
       onloadModel() {
-      this.$router.push('/model/' + this.modelId)
+        this.$router.push('/model/' + this.modelId)
       }
     },
     computed: {
