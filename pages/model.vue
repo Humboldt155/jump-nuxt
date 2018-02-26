@@ -1,30 +1,22 @@
 <template>
   <div><br>
     <div class="box">
-      <div class="level">
+      <div class="level" >
         <div class="level-left">
           <div class="level-item">
             Модель
           </div>
           <div class="level-item">
 
-            <div class="field has-addons">
-
-              <p class="control">
                 <b-autocomplete
                   v-model.lazy="modelId"
                   :data="modelsListFiltered"
-                  placeholder="введите номер"
+                  placeholder="н.п. MOD_200767"
                   @select="option => selected = option">
                   <template slot="empty">Модель не найдена</template>
                 </b-autocomplete>
-              </p>
 
-              <p class="control">
                 <a class="button is-primary" @click="onloadModel">применить</a>
-              </p>
-
-            </div>
 
           </div>
         </div>
@@ -39,7 +31,7 @@
   export default {
     data () {
       return {
-        modelId: 'MOD_200767',
+        modelId: '',
         modelsList: [
         'MOD_202265',
         'MOD_202341',
@@ -103,6 +95,7 @@
     },
     methods: {
       onloadModel() {
+        this.$store.dispatch('setModel', this.modelId)
         this.$router.push('/model/' + this.modelId)
       }
     },
