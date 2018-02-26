@@ -64,8 +64,8 @@
       return true
     },
     created () {
-      this.$store.commit('setModel', this.modelId)
-      this.model = this.$store.state.model[0]
+      this.$store.dispatch('setModel', this.$route.params.id)
+      this.model = this.$store.getters.model[0]
     },
     components: {
       'jump-model-table': ModelTableComponent,

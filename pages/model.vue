@@ -95,7 +95,7 @@
     },
     methods: {
       onloadModel() {
-        this.$store.dispatch('setModel', this.modelId)
+        //this.$store.dispatch('setModel', this.modelId)
         this.$router.push('/model/' + this.modelId)
       }
     },
