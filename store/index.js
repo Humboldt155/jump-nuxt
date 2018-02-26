@@ -25,18 +25,21 @@ const createStore = () => {
       urlOpusChosen: urlsOpus[urlNumber - 1].url
     },
     mutations: {
-      setModel(state, modelId) {
-        axios.get(urlJump.concat('models/'), {
-          params: {
-            id: modelId
-          }
-        })
-          .then(response => {
-            state.model = response.data
-          })
-          .catch(e => {
-            state.errors.push(e)
-          })
+      setModel(state, model) {
+          state.model = model
+        // axios.get(urlJump.concat('models/'), {
+        //   params: {
+        //     id: modelId
+        //   }
+        // })
+        //   .then(response => {
+        //     state.model = response.data
+        //   })
+        //   .catch(e => {
+        //     state.errors.push(e)
+        //   })
+      },
+      setModelId(state, modelId) {
         state.modelId = modelId
       }
     },

@@ -3,23 +3,22 @@
     <section>
       <div class="columns">
         <div class="column is-two-thirds">
-          <h1 class="title is-3">{{ modelId }}</h1>
+          <h1 class="title is-3">{{ model.russian_name }}</h1>
           <h2 class="subtitle is-5">{{ modelId }}</h2>
-          <p>{{model}}</p>
         </div>
         <div class="column">
           <div class="box">
             <div class="tags has-addons">
               <span class="tag is-primary">FR </span>
-              <!--<p class="tag">{{ model.french_name }}</p>-->
+              <p class="tag">{{ model.french_name }}</p>
             </div>
             <div class="tags has-addons">
               <span class="tag is-primary">EN </span>
-              <!--<p class="tag">{{ model.english_name }}</p>-->
+              <p class="tag">{{ model.english_name }}</p>
             </div>
             <div class="tags has-addons">
               <span class="tag is-primary">RU </span>
-              <!--<p class="tag">{{ model.russian_name }}</p>-->
+              <p class="tag">{{ model.russian_name }}</p>
             </div>
             </div>
           </div>
@@ -46,6 +45,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 
   import ModelTableComponent from '../../../components/model/modelTable'
   import AnalogsComponent from '../../../components/model/analogs'
@@ -55,32 +55,31 @@
   export default {
     data () {
       return {
-        modelId: this.$route.params.id,
-        model: []
+        modelId: this.$store.state.modelId,
+        model: this.$store.getters.model
       }
     },
-    validate (data) {
-      console.log(data)
-      return true
+    // async data ({ params }) {
+    //   let { data } = await axios.get(`http://humboldt155.pythonanywhere.com/api/models/${ params.id}`)
+    //   return { model: data.model }
+    // },
+    async fetch ({ store, params }) {
+      let model = await axios.get(`http://humboldt155.pythonanywhere.com/api/models/${ params.id}`)
+      store.commit('setModel', model.data )
+      store.commit('setModelId', params.id )
     },
-    created () {
-      this.$store.dispatch('setModel', this.$route.params.id)
-      this.model = this.$store.getters.model[0]
-    },
+    // async fetch ({ store, params }) {
+    //   let { modelId } = params.id
+    //   store.commit('setModelId', modelId)
+    //   store.commit('setModel', modelId)
+    // },
     components: {
       'jump-model-table': ModelTableComponent,
       'jump-analogs': AnalogsComponent,
       'jump-complements': ComplementsComponent,
       'jump-consist': ConsistComponent
-  }
-    // methods: {
-    //   model () {
-    //     // this.$store.dispatch('setModel', this.modelId)
-    //     return this.$store.model
-    //   }
-    // }
-
     }
+  }
 </script>
 
 <style scoped>
