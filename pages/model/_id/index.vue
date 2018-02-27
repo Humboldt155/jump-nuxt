@@ -4,7 +4,7 @@
       <div class="columns">
         <div class="column is-two-thirds">
           <h1 class="title is-3">{{ model.russian_name }}</h1>
-          <h2 class="subtitle is-5">{{ modelId }}</h2>
+          <h2 class="subtitle is-5">{{ model.id }}</h2>
         </div>
         <div class="column">
           <div class="box">
@@ -27,13 +27,13 @@
   <section>
       <b-tabs class="block"  type="is-boxed" expanded>
             <b-tab-item label="Мастер-данные" icon="account">
-              <!--<jump-model-table></jump-model-table>-->
+              <jump-model-table></jump-model-table>
             </b-tab-item>
             <b-tab-item label="Комплементы" icon="fas-user">
               <!--<jump-complements></jump-complements>-->
             </b-tab-item>
             <b-tab-item label="Аналоги" icon="user">
-              <jump-analogs></jump-analogs>
+              <!--<jump-analogs></jump-analogs>-->
             </b-tab-item>
             <b-tab-item label="Состав" icon="user">
               <!--<jump-consist></jump-consist>-->
@@ -59,20 +59,13 @@ import axios from 'axios'
         model: this.$store.getters.model
       }
     },
-    // async data ({ params }) {
-    //   let { data } = await axios.get(`http://humboldt155.pythonanywhere.com/api/models/${ params.id}`)
-    //   return { model: data.model }
-    // },
     async fetch ({ store, params }) {
       let model = await axios.get(`http://humboldt155.pythonanywhere.com/api/models/${ params.id}`)
+      let products = await axios.get(`http://humboldt155.pythonanywhere.com/api/lm_codes/?model=${ params.id }`)
       store.commit('setModel', model.data )
       store.commit('setModelId', params.id )
+      store.commit('setProducts', products.data )
     },
-    // async fetch ({ store, params }) {
-    //   let { modelId } = params.id
-    //   store.commit('setModelId', modelId)
-    //   store.commit('setModel', modelId)
-    // },
     components: {
       'jump-model-table': ModelTableComponent,
       'jump-analogs': AnalogsComponent,

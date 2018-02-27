@@ -22,6 +22,7 @@ const createStore = () => {
       modelId: '',
       model: [],
       models: [],
+      products: [],
       urlOpusChosen: urlsOpus[urlNumber - 1].url
     },
     mutations: {
@@ -41,7 +42,10 @@ const createStore = () => {
       },
       setModelId(state, modelId) {
         state.modelId = modelId
-      }
+      },
+      setProducts(state, products) {
+        state.products = products
+      },
     },
     actions: {
       setModel(vuexContext, modelId) {
@@ -51,6 +55,12 @@ const createStore = () => {
     getters: {
       model(state) {
         return state.model
+      },
+      products(state) {
+        return state.products
+      },
+      modelId(state) {
+        return state.products
       }
     }
   })

@@ -28,6 +28,9 @@
 </template>
 
 <script>
+
+  import axios from 'axios'
+
   export default {
     data () {
       return {
@@ -95,7 +98,6 @@
     },
     methods: {
       onloadModel() {
-        //this.$store.dispatch('setModel', this.modelId)
         this.$router.push('/model/' + this.modelId)
       }
     },

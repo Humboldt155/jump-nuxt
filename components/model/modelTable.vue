@@ -8,19 +8,19 @@
           <option value="100">100 на странице</option>
           <option value="10000">Все</option>
         </b-select>
-        <download-excel
-          class   = "btn btn-default"
-          :data   = "lm_codes"
-          :fields = "json_fields"
-          name    = "Таблица.xls">
-          <button class="button is-success">
-              Выгрузить в Excel
-          </button>
-        </download-excel>
+        <!--<download-excel-->
+          <!--class   = "btn btn-default"-->
+          <!--:data   = "products"-->
+          <!--:fields = "json_fields"-->
+          <!--name    = "Таблица.xls">-->
+          <!--<button class="button is-success">-->
+              <!--Выгрузить в Excel-->
+          <!--</button>-->
+        <!--</download-excel>-->
 
         </b-field>
       <b-table
-        :data="lm_codes"
+        :data="products"
         :columns="columns"
         :narrowed="true"
         :bordered="true"
@@ -36,6 +36,7 @@
 export default {
   data () {
     return {
+      products: this.$store.getters.products,
       currentPage: 1,
       perPage: 10,
       json_fields: {
@@ -73,21 +74,6 @@ export default {
           sortable: true
         }
       ]
-    }
-  },
-  methods: {
-    requestDB: function () {
-      this.$store.commit('setLmCodes', this.model_selected)
-    }
-  },
-  created: {
-  },
-  computed: {
-    model_selected () {
-      return this.$store.state.model_selected
-    },
-    lm_codes () {
-      return this.$store.state.lm_codes
     }
   }
 }
