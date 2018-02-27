@@ -64,20 +64,22 @@ import https from 'https'
     async fetch ({ store, params }) {
       // получаем модель из базы данных по моделям ADEO
       let model = await axios.get(`http://humboldt155.pythonanywhere.com/api/models/MOD_${ params.id}`)
-      let products = await axios.get(`http://humboldt155.pythonanywhere.com/api/lm_codes/?model=MOD_${ params.id }`)
+      // let products = await axios.get(`http://humboldt155.pythonanywhere.com/api/lm_codes/?model=MOD_${ params.id }`)
       let instance = axios.create({
-        baseURL: 'https://webtopdata2.lmru.opus.adeo.com:5000/foundation/v2/modelTypes/Product/models/',
-        timeout: 1000,
+        baseURL: 'https://webtopdata2.lmru.opus.adeo.com:5000/',
+        // timeout: 10000,
         headers: {'Authorization': 'Basic d2lrZW86b2VraXc', 'X-Opus-Publish-Status': 'published'},
         httpsAgent: new https.Agent({
           rejectUnauthorized: false
         })
       })
-      let modelOPUS = await instance.get(params.id)
-      store.commit('setModel', model.data )
-      store.commit('setModelOPUS', modelOPUS.data )
-      store.commit('setModelId', params.id )
-      store.commit('setProducts', products.data )
+      let modelOPUS = await instance.get('foundation/v2/modelTypes/Product/models/'.concat(params.id))
+      let products = await instance.get('business/v2/products?pageSize=10&startFrom=1&filter=modelCode%3A'
+        .concat(params.id, '&mode=mask&mask=Characteristics&expand=attributes&context=lang%3Aru'))
+      store.dispatch('setModel', model.data )
+      store.dispatch('setModelOPUS', modelOPUS.data )
+      store.dispatch('setModelId', params.id )
+      store.dispatch('setProducts', products.data.content )
     },
     components: {
       'jump-model-table': ModelTableComponent,

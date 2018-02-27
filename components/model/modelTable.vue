@@ -10,8 +10,8 @@
         </b-select>
         </b-field>
       <b-table
-        :data="products"
-        :columns="columns"
+        :data="products[0]"
+        :columns="products[1]"
         :narrowed="true"
         :bordered="true"
         :paginated="true"
@@ -28,38 +28,10 @@ export default {
     return {
       currentPage: 1,
       perPage: 10,
-      json_fields: {
-        'LM_code': 'id',
-        'Name': 'name',
-        'Department': 'department',
-        'AVS': 'avs'
-      },
-      json_meta: [
-        [{
-          'key': 'charset',
-          'value': 'utf-8'
-        }]
-      ],
       columns: [
         {
-          field: 'id',
-          label: 'LM код',
-          sortable: true
-        },
-        {
-          field: 'name',
-          label: 'Название',
-          sortable: true
-        },
-        {
-          field: 'department',
-          label: 'Отдел',
-          sortable: true
-        },
-        {
-          field: 'avs',
-          label: 'Date',
-          centered: true,
+          field: 'Product ID',
+          label: 'Product ID',
           sortable: true
         }
       ]
@@ -67,7 +39,34 @@ export default {
   },
   computed: {
     products () {
-      return this.$store.getters.products
+      var products = []
+      var columns = []
+      var att = {}
+      var content = this.$store.getters.products
+      for (var i = 0; i < content.length; i++) {
+        var product = {}
+        var attributes = content[i].chapter[0].attribute
+        for (var j = 0; j < attributes.length; j++) {
+          var key = attributes[j].displayName
+          var value = attributes[j].value[0]
+          if (key === 'Source country code' || key === 'Описание') {
+            continue
+          } else {
+            product[key] = value
+            if (!(key in att)) { att[key] = key }
+          }
+        }
+        products.push(product)
+        for (var x in att) {
+          columns.push({
+            field: att[x],
+            label: att[x],
+            sortable: true
+          })
+        }
+      }
+      return [products, columns]
+      // return this.$store.getters.products
     }
   }
 }
