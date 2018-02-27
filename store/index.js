@@ -3,6 +3,8 @@ import axios from 'axios'
 
 const urlJump = 'http://humboldt155.pythonanywhere.com/api/'
 
+const OPUSurl = 'https://webtopdata2.lmru.opus.adeo.com:5000/foundation/v2/modelTypes/Product/models/'
+
 const urlsOpus = [
   {'id': 'Test_RMS', 'url': 'http://rrulmcoopuc01.int.adeo.com/'},
   {'id': 'PreProd_RMS', 'url': 'https://awebtopdata.lmru.opus.adeo.com:5000/'},
@@ -21,6 +23,7 @@ const createStore = () => {
     state: {
       modelId: '',
       model: [],
+      modelOPUS: [],
       models: [],
       products: [],
       urlOpusChosen: urlsOpus[urlNumber - 1].url
@@ -46,10 +49,22 @@ const createStore = () => {
       setProducts(state, products) {
         state.products = products
       },
+      setModelOPUS(state, modelOPUS) {
+        state.modelOPUS = modelOPUS
+      }
     },
     actions: {
       setModel(vuexContext, modelId) {
         vuexContext.commit('setModel', modelId)
+      },
+      setModelId(vuexContext, modelId) {
+        vuexContext.commit('setModelId', modelId)
+      },
+      setProducts(vuexContext, products) {
+        vuexContext.commit('setProducts', products)
+      },
+      setModelOPUS(vuexContext, ModelOPUS) {
+        vuexContext.commit('setModelOPUS', ModelOPUS)
       }
     },
     getters: {
@@ -60,7 +75,10 @@ const createStore = () => {
         return state.products
       },
       modelId(state) {
-        return state.products
+        return state.modelId
+      },
+      modelOPUS(state) {
+        return state.modelOPUS
       }
     }
   })

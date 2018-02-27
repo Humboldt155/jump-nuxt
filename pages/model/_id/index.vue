@@ -3,7 +3,7 @@
     <section>
       <div class="columns">
         <div class="column is-two-thirds">
-          <h1 class="title is-3">{{ model.russian_name }}</h1>
+          <h1 class="title is-3">{{ modelOPUS.displayName }}</h1>
           <h2 class="subtitle is-5">{{ model.id }}</h2>
         </div>
         <div class="column">
@@ -46,6 +46,7 @@
 
 <script>
 import axios from 'axios'
+import https from 'https'
 
   import ModelTableComponent from '../../../components/model/modelTable'
   import AnalogsComponent from '../../../components/model/analogs'
@@ -55,14 +56,26 @@ import axios from 'axios'
   export default {
     data () {
       return {
-        modelId: this.$store.state.modelId,
+        modelId: this.$store.getters.modelId,
+        modelOPUS: this.$store.getters.modelOPUS,
         model: this.$store.getters.model
       }
     },
     async fetch ({ store, params }) {
-      let model = await axios.get(`http://humboldt155.pythonanywhere.com/api/models/${ params.id}`)
-      let products = await axios.get(`http://humboldt155.pythonanywhere.com/api/lm_codes/?model=${ params.id }`)
+      // получаем модель из базы данных по моделям ADEO
+      let model = await axios.get(`http://humboldt155.pythonanywhere.com/api/models/MOD_${ params.id}`)
+      let products = await axios.get(`http://humboldt155.pythonanywhere.com/api/lm_codes/?model=MOD_${ params.id }`)
+      let instance = axios.create({
+        baseURL: 'https://webtopdata2.lmru.opus.adeo.com:5000/foundation/v2/modelTypes/Product/models/',
+        timeout: 1000,
+        headers: {'Authorization': 'Basic d2lrZW86b2VraXc', 'X-Opus-Publish-Status': 'published'},
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false
+        })
+      })
+      let modelOPUS = await instance.get(params.id)
       store.commit('setModel', model.data )
+      store.commit('setModelOPUS', modelOPUS.data )
       store.commit('setModelId', params.id )
       store.commit('setProducts', products.data )
     },
@@ -71,7 +84,10 @@ import axios from 'axios'
       'jump-analogs': AnalogsComponent,
       'jump-complements': ComplementsComponent,
       'jump-consist': ConsistComponent
-    }
+    },
+    // created () {
+    //   this.$store.commit('setModelOPUS', this.modelId )
+    // }
   }
 </script>
 
