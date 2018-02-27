@@ -8,16 +8,6 @@
           <option value="100">100 на странице</option>
           <option value="10000">Все</option>
         </b-select>
-        <!--<download-excel-->
-          <!--class   = "btn btn-default"-->
-          <!--:data   = "products"-->
-          <!--:fields = "json_fields"-->
-          <!--name    = "Таблица.xls">-->
-          <!--<button class="button is-success">-->
-              <!--Выгрузить в Excel-->
-          <!--</button>-->
-        <!--</download-excel>-->
-
         </b-field>
       <b-table
         :data="products"
@@ -36,7 +26,6 @@
 export default {
   data () {
     return {
-      products: this.$store.getters.products,
       currentPage: 1,
       perPage: 10,
       json_fields: {
@@ -74,6 +63,11 @@ export default {
           sortable: true
         }
       ]
+    }
+  },
+  computed: {
+    products () {
+      return this.$store.getters.products
     }
   }
 }
