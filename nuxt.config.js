@@ -18,6 +18,7 @@ module.exports = {
   */
   plugins: [
     '~plugins/buefy.js',
+    '~plugins/element-ui.js',
     '~plugins/font-awesome.js'
   ],
   loading: { color: '#3B8070' },
@@ -25,7 +26,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['axios', 'buefy'],
+    vendor: ['axios', 'buefy', 'element-ui'],
     /*
     ** Run ESLint on save
     */

@@ -1,23 +1,17 @@
 <template>
     <div>
-      <b-field grouped group-multiline>
-        <b-select v-model="perPage">
-          <option value="10">10 на странице</option>
-          <option value="25">25 на странице</option>
-          <option value="50">50 на странице</option>
-          <option value="100">100 на странице</option>
-          <option value="10000">Все</option>
-        </b-select>
-        </b-field>
-      <b-table
+      <el-table
         :data="products[0]"
-        :columns="products[1]"
-        :narrowed="true"
-        :bordered="true"
-        :paginated="true"
-        :per-page="perPage"
-        :current-page.sync="currentPage"
-      ></b-table>
+        height="750"
+        border
+        style="width: 100%">
+        <el-table-column
+          v-for="column in (products[1])" :key="column"
+          v-bind:prop="column"
+          v-bind:label="column"
+          width="180">
+        </el-table-column>
+      </el-table>
     </div>
 </template>
 
@@ -59,11 +53,7 @@ export default {
         products.push(product)
       }
       for (let key of att) {
-          columns.push({
-            field: key,
-            label: key,
-            sortable: true
-          })
+          columns.push(key)
         }
       return [products, columns]
       // return this.$store.getters.products
