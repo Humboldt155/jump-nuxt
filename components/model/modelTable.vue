@@ -41,7 +41,7 @@ export default {
     products () {
       var products = []
       var columns = []
-      var att = {}
+      var att = new Set()
       var content = this.$store.getters.products
       for (var i = 0; i < content.length; i++) {
         var product = {}
@@ -53,18 +53,18 @@ export default {
             continue
           } else {
             product[key] = value
-            if (!(key in att)) { att[key] = key }
+            att.add(key.toString())
           }
         }
         products.push(product)
-        for (var x in att) {
+      }
+      for (let key of att) {
           columns.push({
-            field: att[x],
-            label: att[x],
+            field: key,
+            label: key,
             sortable: true
           })
         }
-      }
       return [products, columns]
       // return this.$store.getters.products
     }
