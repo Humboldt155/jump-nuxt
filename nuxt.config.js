@@ -20,6 +20,7 @@ module.exports = {
   plugins: [
     '~plugins/buefy.js',
     '~plugins/font-awesome.js',
+    '~plugins/vue-json-excel.js',
     '~plugins/bootstrap-vue.js',
   ],
   loading: { color: '#09d880' },
@@ -33,6 +34,7 @@ module.exports = {
     vendor: [
       'axios',
       'buefy',
+      'vue-json-excel',
       'bootstrap-vue'
     ],
     /*

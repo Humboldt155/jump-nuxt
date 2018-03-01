@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 const excludeAtt = [
   'Current national selling price has a promotion',
+  'Язык упаковки',
+  'Код ОКПД',
   'International ID',
   'Тип поставщика',
   'Source country code',
@@ -212,7 +214,12 @@ const createStore = () => {
           let product = productsNew[i]
           for (let key of att) {
             if (!(key in product)) {
-              productsNew[i][key] = ""
+              if (key === 'Описание') {
+                productsNew[i][key] = "Нет описания"
+              }
+              else {
+                productsNew[i][key] = ""
+              }
             }
           }
         }
@@ -225,7 +232,7 @@ const createStore = () => {
           },
           {
             key: 'Название на сайте',
-            label: 'Название на сайте',
+            label: 'Название на сайте ________________________________________________',
             sortable: true
           },
           {
@@ -238,11 +245,6 @@ const createStore = () => {
             label: 'Дата AVS',
             sortable: true
           },
-          // {
-          //   key: 'Описание',
-          //   label: 'Описание',
-          //   sortable: true
-          // },
           'Описание'
         ]
         for (let key of att) {
@@ -250,7 +252,8 @@ const createStore = () => {
               columns.push(key)
               fields.push({
                 key: key,
-                label: key
+                label: key.concat(' __________________________________'),
+                sortable: true
               })
             }
           }

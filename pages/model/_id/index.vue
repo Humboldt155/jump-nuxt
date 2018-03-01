@@ -55,7 +55,7 @@ import https from 'https'
         })
       })
       let modelOPUS = await instance.get('foundation/v2/modelTypes/Product/models/'.concat(params.id))
-      let products = await instance.get('business/v2/products?pageSize=10&startFrom=10&filter=modelCode%3A'
+      let products = await instance.get('business/v2/products?pageSize=100&startFrom=10&filter=modelCode%3A'
         .concat(params.id, '&expand=attributes&context=lang%3Aru'))
       store.dispatch('setModel', model.data )
       store.dispatch('setModelOPUS', modelOPUS.data )

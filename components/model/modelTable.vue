@@ -3,7 +3,6 @@
       <b-table
         bordered
         responsive
-        head-variant="light"
         hover
         small
         :items="products"
@@ -11,7 +10,7 @@
       >
         <template slot="Описание" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-          <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2" variant="outline-primary">
+          <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2" variant="outline-secondary">
             описание {{ row.detailsShowing ? '-' : '+'}}
           </b-button>
           <!-- In some circumstances you may need to use @click.native.stop instead -->
