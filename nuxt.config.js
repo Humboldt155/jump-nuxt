@@ -16,17 +16,25 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
+
   plugins: [
     '~plugins/buefy.js',
-    '~plugins/element-ui.js',
-    '~plugins/font-awesome.js'
+    '~plugins/font-awesome.js',
+    '~plugins/bootstrap-vue.js',
   ],
-  loading: { color: '#3B8070' },
+  loading: { color: '#09d880' },
   /*
   ** Build configuration
   */
+  modules: [
+    'bootstrap-vue/nuxt',
+  ],
   build: {
-    vendor: ['axios', 'buefy', 'element-ui'],
+    vendor: [
+      'axios',
+      'buefy',
+      'bootstrap-vue'
+    ],
     /*
     ** Run ESLint on save
     */

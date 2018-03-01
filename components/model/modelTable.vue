@@ -1,17 +1,28 @@
 <template>
     <div>
-      <el-table
-        :data="products[0]"
-        height="750"
-        border
-        style="width: 100%">
-        <el-table-column
-          v-for="column in (products[1])" :key="column"
-          v-bind:prop="column"
-          v-bind:label="column"
-          width="180">
-        </el-table-column>
-      </el-table>
+      <b-table
+        bordered
+        responsive
+        head-variant="light"
+        hover
+        small
+        :items="products"
+        :fields="fields"
+      >
+        <template slot="Описание" slot-scope="row">
+          <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
+          <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2" variant="outline-primary">
+            описание {{ row.detailsShowing ? '-' : '+'}}
+          </b-button>
+          <!-- In some circumstances you may need to use @click.native.stop instead -->
+          <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
+        </template>
+        <template slot="row-details" slot-scope="row">
+          <b-card title="Описание:" tag="article" style="max-width: 40rem" class="mb-2">
+            <p class="card-text">{{ row.item['Описание'] }}</p>
+          </b-card>
+        </template>
+      </b-table>
     </div>
 </template>
 
@@ -20,43 +31,13 @@
 export default {
   data () {
     return {
-      currentPage: 1,
-      perPage: 10,
-      columns: [
-        {
-          field: 'Product ID',
-          label: 'Product ID',
-          sortable: true
-        }
-      ]
+      products: this.$store.getters.products,
+
     }
   },
   computed: {
-    products () {
-      var products = []
-      var columns = []
-      var att = new Set()
-      var content = this.$store.getters.products
-      for (var i = 0; i < content.length; i++) {
-        var product = {}
-        var attributes = content[i].chapter[0].attribute
-        for (var j = 0; j < attributes.length; j++) {
-          var key = attributes[j].displayName
-          var value = attributes[j].value[0]
-          if (key === 'Source country code' || key === 'Описание') {
-            continue
-          } else {
-            product[key] = value
-            att.add(key.toString())
-          }
-        }
-        products.push(product)
-      }
-      for (let key of att) {
-          columns.push(key)
-        }
-      return [products, columns]
-      // return this.$store.getters.products
+    fields () {
+      return this.$store.getters.fields
     }
   }
 }
