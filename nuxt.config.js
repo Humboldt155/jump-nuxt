@@ -1,4 +1,11 @@
 module.exports = {
+
+  generate: {
+    routes: [
+      '/models/200767',
+      '/models/200615'
+    ]
+  },
   /*
   ** Headers of the page
   */
@@ -34,7 +41,6 @@ module.exports = {
     vendor: [
       'axios',
       'buefy',
-      'vue-json-excel',
       'bootstrap-vue'
     ],
     /*

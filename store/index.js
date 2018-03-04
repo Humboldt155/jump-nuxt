@@ -1,5 +1,15 @@
 import Vuex from 'vuex'
+import axios from 'axios'
+import https from 'https'
 
+const axios_instance = axios.create({
+        baseURL: 'https://webtopdata2.lmru.opus.adeo.com:5000/',
+        // timeout: 10000,
+        headers: {'Authorization': 'Basic d2lrZW86b2VraXc', 'X-Opus-Publish-Status': 'published'},
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false
+        })
+      })
 
 const excludeAtt = [
   'Current national selling price has a promotion',
@@ -134,7 +144,7 @@ const createStore = () => {
       products: [],
       modelId: '',
       model: [],
-      modelOPUS: [],
+      modelOPUS: {displayName: 'Здесь будет название модели'},
       columns: [],
       fields: [],
       models: [],
@@ -263,8 +273,8 @@ const createStore = () => {
         vuexContext.commit('setProducts', productsNew)
       },
 
-      setModelOPUS(vuexContext, ModelOPUS) {
-        vuexContext.commit('setModelOPUS', ModelOPUS)
+      setModelOPUS(vuexContext, modelOPUS) {
+        vuexContext.commit('setModelOPUS', modelOPUS)
       }
     },
 
